@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>快速登录</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="./css/iconfont.css">
+	<link rel="stylesheet" href="css/index.css">
+	
+</head>
+<body style="font-family: 'microsoft yahei';">
+
+<section id="quick_login" class="method_1">
+
+ <h2><a href="fruit.v.php"><img src="images/arrow_left.png" alt=""> </a>登录果园账户</h2>
+
+ <div class="info_form">
+	<div class="phone">
+		<label for=""><img src="images/phone.png" alt=""></label>
+		<input type="text" class="_phone" autofocus name="phone" placeholder="手机号码" />
+	</div>
+
+	<div class="pwd">
+		<label for=""><img src="images/pwd.png" alt=""></label>
+		<input type="text" name="login_pwd" placeholder="密码" />
+	</div>
+
+	<div class="number" style="display: none">
+		<label for=""><img src="images/number.png" alt=""></label>
+		<input type="text" name="" placeholder="验证码" />
+		<img src="../api/codeApi.php" onclick="this.src='../api/codeApi.php?t='+Math.random()" alt="">
+	</div>
+
+	<div class="phone_number" style="display: none">
+		<label for=""><img src="images/phone.png" alt=""></label>
+		<input type="text" name="" placeholder="六位手机验证码" />
+		<a href="">获取验证码</a>
+	</div>
+
+	<a href="#" class="login_btn" style="margin-top:0">登录</a>
+
+	<a href="login_account.v.html" class="login_account login_account_1" style="display: none">账号密码登录</a>
+
+	<a href="quick_login.v.html" class="login_account login_account_2">手机快捷登录</a>
+	<a href="./register.html" class="reset_pwd addUser" style="margin-left: 10px;">用户注册</a>
+	<a href="#" class="reset_pwd">找回密码</a>
+	
+ </div>
+
+</section>
+
+<section id="quick_login" class="method_2" style="display: none">
+ <h2><a href="quick_login.v.html"><img src="images/arrow_left.png" alt=""></a>找回密码</h2>
+
+ <div class="info_form">
+	
+		<div class="phone_number find_phone">
+			<label for=""><img src="images/phone.png" alt=""></label>
+			<input type="text" class="_phone" autofocus name="" placeholder="手机号码" />
+			<a href="">获取验证码</a>
+		</div>
+		<div>
+			<label for=""><img src="images/key.png" alt=""></label>
+			<input type="text" name="" placeholder="六位验证码" />
+		</div>
+
+		<div>
+			<label for=""><img src="images/pwd.png" alt=""></label>
+			<input type="text" name="" placeholder="新密码(至少六位)" />
+		</div>
+
+		<a href="#" class="login_btn" style="margin-top:0">完成</a>
+ </div>
+
+</section>
+
+<script src="js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+	
+	$("#quick_login .login_btn").click(function(){
+		$.post("../api/login.php",{
+			"_phone":$(".method_1 .info_form input[name=phone]").val(),
+			"login_pwd":$(".method_1 .info_form input[name=login_pwd]").val()
+		},function(data){
+			if(data == "success"){
+				// alert("登录成功");
+				window.location.href='./user_center.v.php';
+			}else{
+				alert("用户不存在!请重新输入。");
+			}
+		});	
+	});
+
+	$("#quick_login .info_form .login_account_2").click(function(e){
+		e.preventDefault();
+		$("#quick_login .info_form .pwd").css("display","none");
+		$("#quick_login .info_form .phone_number").css("display","block");
+		$("#quick_login .info_form .number").css("display","block");
+		$("#quick_login .info_form .login_account_1").css("display","block");
+		$("#quick_login .info_form .reset_pwd").css("display","none");
+		$("#quick_login .info_form .login_account_2").css("display","none");
+	});
+	$("#quick_login .info_form .login_account_1").click(function(e){
+		e.preventDefault();
+		$("#quick_login .info_form .pwd").css("display","block");
+		$("#quick_login .info_form .phone_number").css("display","none");
+		$("#quick_login .info_form .number").css("display","none");
+		$("#quick_login .info_form .login_account_1").css("display","none");
+		$("#quick_login .info_form .reset_pwd").css("display","block");
+		$("#quick_login .info_form .login_account_2").css("display","inline-block");
+	});
+
+	$(".method_1 .info_form .reset_pwd").click(function(){
+		$(".method_2").css("display","block");
+		$(".method_1").css("display","none");
+		$("#quick_login .info_form .find_phone").css("display","block");
+	});
+	
+</script>
+</body>
+</html>
